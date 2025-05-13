@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>إذاعة القرآن الكريم - بث مباشر</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Arial', sans-serif;
+      background-image: url('https://i.imgur.com/YUPbiHz.png'); /* خلفية مزخرفة مكتوب فيها إذاعة القرآن الكريم */
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      color: #fff;
+      text-align: center;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      color: #ffd700;
+      margin-bottom: 30px;
+      text-shadow: 0 0 15px #000;
+      font-family: 'Scheherazade', serif;
+    }
+
+    .player-container {
+      display: inline-block;
+      background-color: rgba(255, 255, 255, 0.08);
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px #000;
+    }
+
+    iframe {
+      width: 90%;
+      max-width: 800px;
+      height: 450px;
+      border: 4px solid #ffd700;
+      border-radius: 15px;
+    }
+
+    .decor {
+      margin-top: 30px;
+    }
+
+    .decor img {
+      width: 100px;
+      margin: 0 15px;
+      opacity: 0.7;
+    }
+
+    .azkar-box {
+      margin-top: 40px;
+      font-size: 1.5em;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 15px 25px;
+      border-radius: 20px;
+      display: inline-block;
+      animation: fade 1s ease-in-out;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .prayer-times {
+      margin-top: 40px;
+      font-size: 1.2em;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 20px;
+      display: inline-block;
+      text-align: right;
+    }
+
+    .prayer-times h2 {
+      color: #ffd700;
+      margin-bottom: 10px;
+    }
+
+    .prayer-times ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .prayer-times li {
+      margin-bottom: 5px;
+    }
+
+    .countdown {
+      font-size: 2em;
+      color: #ffd700;
+      margin-top: 20px;
+      font-family: 'Scheherazade', serif;
+    }
+
+    .countdown-text {
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>بث مباشر من الحرم المكي</h1>
+
+    <div class="player-container">
+      <iframe 
+        src="https://www.youtube.com/embed/eJNWHKld5E8?autoplay=1" 
+        allow="autoplay; encrypted-media" 
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <div class="azkar-box" id="zekr">سبحان الله وبحمده، سبحان الله العظيم</div>
+
+    <div class="prayer-times">
+      <h2>مواقيت الصلاة</h2>
+      <div>
+        <h3>أبها</h3>
+        <ul>
+          <li>الفجر: 04:16 ص</li>
+          <li>الظهر: 12:06 م</li>
+          <li>العصر: 03:17 م</li>
+          <li>المغرب: 06:35 م</li>
+          <li>العشاء: 08:05 م</li>
+        </ul>
+      </div>
+      <div>
+        <h3>خميس مشيط</h3>
+        <ul>
+          <li>الفجر: 04:15 ص</li>
+          <li>الظهر: 12:05 م</li>
+          <li>العصر: 03:16 م</li>
+          <li>المغرب: 06:35 م</li>
+          <li>العشاء: 08:05 م</li>
+        </ul>
+      </div>
+      <div>
+        <h3>مكة المكرمة</h3>
+        <ul>
+          <li>الفجر: 04:20 ص</li>
+          <li>الظهر: 12:17 م</li>
+          <li>العصر: 03:35 م</li>
+          <li>المغرب: 06:51 م</li>
+          <li>العشاء: 08:21 م</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="countdown">
+      <div class="countdown-text" id="countdown"></div>
+    </div>
+
+    <div class="decor">
+      <img src="https://i.imgur.com/zyZoNid.png" alt="زخرفة إسلامية">
+      <img src="https://i.imgur.com/zyZoNid.png" alt="زخرفة إسلامية">
+    </div>
+  </div>
+
+  <script>
+    const azkar = [
+      "أستغفر الله العظيم وأتوب إليه",
+      "سبحان الله والحمد لله ولا إله إلا الله والله أكبر",
+      "اللهم صل وسلم على نبينا محمد",
+      "لا حول ولا قوة إلا بالله",
+      "سبحان الله وبحمده، سبحان الله العظيم"
+    ];
+
+    let index = 0;
+    setInterval(() => {
+      index = (index + 1) % azkar.length;
+      document.getElementById('zekr').textContent = azkar[index];
+    }, 7000);
+
+    // Prayer times for cities (Abha, Khamis Mushait, Mecca)
+    const prayerTimes = {
+      "Abha": {
+        "Fajr": "04:16",
+        "Dhuhr": "12:06",
+        "Asr": "03:17",
+        "Maghrib": "06:35",
+        "Isha": "08:05"
+      },
+      "KhamisMushait": {
+        "Fajr": "04:15",
+        "Dhuhr": "12:05",
+        "Asr": "03:16",
+        "Maghrib": "06:35",
+        "Isha": "08:05"
+      },
+      "Makkah": {
+        "Fajr": "04:20",
+        "Dhuhr": "12:17",
+        "Asr": "03:35",
+        "Maghrib": "06:51",
+        "Isha": "08:21"
+      }
+    };
+
+    // Function to calculate countdown to prayer time
+    function updateCountdown() {
+      const now = new Date();
+      let nextPrayer = null;
+      let nextPrayerTime = null;
+      let nextCity = "Makkah"; // Default city
+
+      // Calculate next prayer time
+      Object.keys(prayerTimes).forEach(city => {
+        const times = prayerTimes[city];
+        const cityNextPrayerTime = Object.keys(times).find(prayer => {
+          const prayerTime = new Date();
+          const [hour, minute] = times[prayer].split(":");
+          prayerTime.setHours(hour, minute, 0, 0);
+          return prayerTime > now;
+        });
+
+        if (cityNextPrayerTime) {
+          nextPrayer = cityNextPrayerTime;
+          nextPrayerTime = prayerTimes[city][nextPrayer];
+          nextCity = city;
+        }
+      });
+
+      // Display the countdown
+      const [nextHour, nextMinute] = nextPrayerTime.split(":");
+      const prayerTime = new Date();
+      prayerTime.setHours(nextHour, nextMinute, 0, 0);
+
+      const timeRemaining = prayerTime - now;
+      const hoursRemaining = Math.floor(timeRemaining / (1000 * 60 * 60));
+      const minutesRemaining = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+
+      document.getElementById('countdown').textContent = `باقي ${hoursRemaining} ساعة و${minutesRemaining} دقيقة حتى ${nextPrayer} في ${nextCity}`;
+
+      // Play sound alert at prayer time
+      if (timeRemaining <= 0) {
+        const audio = new Audio('https://www.soundjay.com/button/beep-07.wav'); // Alert sound
+        audio.play();
+      }
+    }
+
+    setInterval(updateCountdown, 60000); // Update countdown every minute
+  </script>
+</body>
+</html>
